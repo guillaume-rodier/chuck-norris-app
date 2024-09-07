@@ -1,5 +1,5 @@
 import { createStore } from 'vuex'
-import { ChuckNorrisStore } from './modules'
+import { ChuckNorrisStore } from '@/store/modules'
 import createPersistedState from "vuex-persistedstate"
 
 export default createStore({

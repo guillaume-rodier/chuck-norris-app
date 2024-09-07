@@ -52,11 +52,23 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import { useStore } from 'vuex'
 import ChuckNorrisImg from '@/assets/img/Chuck-Norris-Roundhouse.jpg'
 
 // Data
+const store = useStore()
 const show = ref<boolean>(false)
+
+// Life cycle
+onMounted(async() => {
+  await store.dispatch('ChuckNorrisStore/getRandomChuckJokeAction')
+  // await store.dispatch('ChuckNorrisStore/getRandomChuckJokeWithCategoryAction', 'tesssssssrijzoijef')
+  await store.dispatch('ChuckNorrisStore/getChuckCategoriesJoke')
+
+  console.log(store.getters['ChuckNorrisStore/getRandomChuckJokeState'])
+  console.log(store.getters['ChuckNorrisStore/getChuckCategoriesState'])
+})
 
 // Functions
 const handleShow = () => {
