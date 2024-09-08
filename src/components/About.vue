@@ -6,21 +6,6 @@
           Toggle theme
         </v-btn>
       </v-col>
-      <v-col cols="auto">
-        <v-btn @click="handleAlert">
-          Alert !!!
-        </v-btn>
-      </v-col>
-      <v-col cols="auto">
-        <v-btn @click="handleIncrementStore">
-          Increment the store
-        </v-btn>
-      </v-col>
-      <v-col cols="auto">
-        <v-btn @click="handleTestStoreModuleB">
-          Test the module b
-        </v-btn>
-      </v-col>
     </v-row>
   </v-container>
 </template>

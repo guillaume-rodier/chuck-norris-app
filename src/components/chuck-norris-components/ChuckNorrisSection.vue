@@ -1,77 +1,90 @@
- <template>
-  <v-card max-width="344" width="100%">
-    <v-img
-      :src="ChuckNorrisImg"
-      aspect-ratio="1.15"
-      cover
-    />
+<template>
+  <div class="d-flex fill-height justify-center align-center">
+    <v-card width="100%" max-width="344" elevation="4">
+      <template v-slot:title>
+        <v-tooltip :text="appTitle" location="top">
+          <template v-slot:activator="{ props }">
+            <span v-bind="props" class="font-weight-black">
+              {{ appTitle }}
+            </span>
+          </template>
+        </v-tooltip>
+      </template>
 
-    <v-card-title>
-      Chuck Norris
-    </v-card-title>
-
-    <v-card-subtitle>
-      Actor and martial artist
-    </v-card-subtitle>
-
-    <v-card-actions>
-      <v-btn
-        color="primary-darken-2"
-        text="Learn more"
-        @click="handleShow"
+      <v-img
+        :src="ChuckNorrisImg"
+        aspect-ratio="1.15"
+        cover
       />
 
-      <v-spacer />
+      <v-card-title>
+        Chuck Norris
+      </v-card-title>
 
-      <v-btn
-        :icon="show ? 'mdi-chevron-up' : 'mdi-chevron-down'"
-        @click="handleShow"
-      />
-    </v-card-actions>
+      <v-card-subtitle>
+        Actor and martial artist
+      </v-card-subtitle>
 
-    <v-expand-transition>
-      <div v-show="show">
-        <v-divider></v-divider>
+      <v-card-actions>
+        <v-btn
+          color="primary-darken-2"
+          text="Learn more"
+          @click="handleShow"
+        />
 
-        <v-card-text>
-          Chuck Norris is best known for his acting and martial artist career. Here are the different facets of his profession:<br/>
+        <v-btn
+          color="primary-darken-2"
+          text="About page"
+          @click="handleAbout"
+        />
 
-          1. <b>Actor</b>: Chuck Norris is best known for his roles in action films and television series. He is particularly known for his leading role in the series Walker, Texas Ranger, as well as in films like Way of the Dragon (where he fought Bruce Lee), Delta Force, and the Missing in Action film series.<br/>
+        <v-spacer />
 
-          2. <b>Martial Artist</b>: Before becoming an actor, Chuck Norris had a successful career in martial arts. He won numerous karate championship titles and founded his own martial arts school, Chun Kuk Do.<br/>
+        <v-btn
+          :icon="show ? 'mdi-chevron-up' : 'mdi-chevron-down'"
+          @click="handleShow"
+        />
+      </v-card-actions>
 
-          3. <b>Producer and screenwriter</b>: Chuck Norris has also produced several of his films and series, and has sometimes contributed to the writing of the screenplays.<br/>
+      <v-expand-transition>
+        <div v-show="show">
+          <v-divider></v-divider>
 
-          4. <b>Author</b>: He has written several books, including on martial arts, philosophy, and even novels.<br/>
+          <v-card-text>
+            <!-- Chuck Norris is best known for his acting and martial artist career. Here are the different facets of his profession:<br/>
 
-          In short, Chuck Norris is an actor, martial artist, producer, screenwriter, and author.
-        </v-card-text>
-      </div>
-    </v-expand-transition>
-  </v-card>
+            1. <b>Actor</b>: Chuck Norris is best known for his roles in action films and television series. He is particularly known for his leading role in the series Walker, Texas Ranger, as well as in films like Way of the Dragon (where he fought Bruce Lee), Delta Force, and the Missing in Action film series.<br/>
+
+            2. <b>Martial Artist</b>: Before becoming an actor, Chuck Norris had a successful career in martial arts. He won numerous karate championship titles and founded his own martial arts school, Chun Kuk Do.<br/>
+
+            3. <b>Producer and screenwriter</b>: Chuck Norris has also produced several of his films and series, and has sometimes contributed to the writing of the screenplays.<br/>
+
+            4. <b>Author</b>: He has written several books, including on martial arts, philosophy, and even novels.<br/>
+
+            In short, Chuck Norris is an actor, martial artist, producer, screenwriter, and author. -->
+          </v-card-text>
+        </div>
+      </v-expand-transition>
+    </v-card>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import { useStore } from 'vuex'
+import { ref, } from 'vue'
+import { useRouter } from 'vue-router'
 import ChuckNorrisImg from '@/assets/img/Chuck-Norris-Roundhouse.jpg'
 
 // Data
-const store = useStore()
+const router = useRouter()
 const show = ref<boolean>(false)
-
-// Life cycle
-onMounted(async() => {
-  await store.dispatch('ChuckNorrisStore/getRandomChuckJokeAction')
-  // await store.dispatch('ChuckNorrisStore/getRandomChuckJokeWithCategoryAction', 'tesssssssrijzoijef')
-  await store.dispatch('ChuckNorrisStore/getChuckCategoriesJoke')
-
-  console.log(store.getters['ChuckNorrisStore/getRandomChuckJokeState'])
-  console.log(store.getters['ChuckNorrisStore/getChuckCategoriesState'])
-})
+const appTitle = ref<string>('Welcome to Chuck Norris app')
 
 // Functions
 const handleShow = () => {
   show.value = !show.value
+}
+
+const handleAbout = () => {
+  router.push({ name: 'about' })
 }
 </script>

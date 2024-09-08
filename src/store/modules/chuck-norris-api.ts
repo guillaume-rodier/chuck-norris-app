@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { TChuckNorrisJoke } from '@/types/chuckNorris'
+import { TChuckNorrisJoke, TChuckNorrisParams } from '@/types/chuckNorris'
 
 export default {
   namespaced: true,
@@ -27,9 +27,11 @@ export default {
   },
   actions: {
     // TODO: some actions with https://api.chucknorris.io/#!
-    async getRandomChuckJokeAction({ commit } : { commit: any}) {
+    async getRandomChuckJokeAction({ commit } : { commit: any }, params: TChuckNorrisParams) {
       try {
-        const response = await axios.get('https://api.chucknorris.io/jokes/random')
+        console.log('params API:', params)
+
+        const response = await axios.get('https://api.chucknorris.io/jokes/random', { params })
 
         if ('data' in response && response.status === 200) {
           commit('saveChuckNorrisRandomJoke', response.data)
@@ -39,19 +41,7 @@ export default {
       }
     },
 
-    async getRandomChuckJokeWithCategoryAction({ commit } : { commit: any}, category: string) {
-      try {
-        const response = await axios.get(`https://api.chucknorris.io/jokes/random?category=${category}`)
-
-        if ('data' in response && response.status === 200) {
-          commit('saveChuckNorrisRandomJoke', response.data)
-        }
-      } catch(e) {
-        console.error(e)
-      }
-    },
-
-    async getChuckCategoriesJoke({ commit } : { commit: any}) {
+    async getChuckCategoriesJoke({ commit } : { commit: any }) {
       try {
         const response = await axios.get('https://api.chucknorris.io/jokes/categories')
 

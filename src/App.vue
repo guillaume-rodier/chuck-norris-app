@@ -15,7 +15,7 @@
       ></v-progress-circular>
     </v-overlay>
     <v-app v-if="!isLoading" id="app">
-      <v-layout class="rounded rounded-md">
+      <v-layout>
         <v-main class="main-class">
           <router-view />
         </v-main>
