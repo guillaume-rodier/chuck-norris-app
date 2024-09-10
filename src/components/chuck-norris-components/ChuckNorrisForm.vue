@@ -30,7 +30,7 @@
         <v-select
           v-model="chuckNorrisParamsLocale.category"
           :items="chuckCategories"
-          :loading="loading"
+          :loading="loadingChuckCategories"
           label="Select a joke category"
           variant="outlined"
           color="primary"
@@ -52,7 +52,10 @@
       </v-card-text>
 
       <v-card-actions>
+        <v-spacer />
         <v-btn
+          :elevation="4"
+          :loading="loadingChuckJoke"
           color="primary-darken-2"
           text="Another joke, please"
           @click="handleShow"
@@ -61,15 +64,16 @@
     </v-card>
   </div>
 </template>
-  
-<script setup lang="ts">
+
+<script lang="ts" setup>
 import { computed } from 'vue'
 import { useStore } from 'vuex'
 import { TChuckNorrisJoke, TChuckNorrisParams } from '@/types/chuckNorris'
 
 // Locale types
 type TProps = {
-  loading: boolean,
+  loadingChuckJoke: boolean,
+  loadingChuckCategories: boolean,
   chuckNorrisParams: TChuckNorrisParams,
 }
 
@@ -78,7 +82,8 @@ const emit = defineEmits(['update:chuckNorrisParams', 'get-chuck-joke'])
 
 // Data
 const props = withDefaults(defineProps<TProps>(), {
-  loading: false,
+  loadingChuckJoke: false,
+  loadingChuckCategories: false,
 })
 const store = useStore()
 
@@ -106,6 +111,7 @@ const handleShow = () => emit('get-chuck-joke')
 .chuck-joke-section {
   .chuck-joke-container {
     p {
+      width: 100%;
       max-width: 350px;
     }
   }

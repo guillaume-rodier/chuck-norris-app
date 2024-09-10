@@ -7,7 +7,7 @@
 // Composables
 import { createRouter, createWebHistory } from 'vue-router'
 import IndexPage from '@/pages/IndexPage.vue'
-import About from '@/components/About.vue'
+import About from '@/pages/AboutPage.vue'
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),

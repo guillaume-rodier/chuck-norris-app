@@ -13,6 +13,7 @@
         color="primary"
         indeterminate
       ></v-progress-circular>
+      <Vue3Lottie :animationData="BabyBomb" :height="300" />
     </v-overlay>
     <v-app v-if="!isLoading" id="app">
       <v-layout>
@@ -26,6 +27,8 @@
 
 <script lang="ts" setup>
 import { ref, onMounted } from "vue"
+import { Vue3Lottie } from 'vue3-lottie'
+import { BabyBomb } from '@/assets/lottieFiles'
 
 // Data
 const isLoading = ref<boolean>(true)
@@ -34,7 +37,7 @@ const isLoading = ref<boolean>(true)
 onMounted(() => {
   setTimeout(() => {
     isLoading.value = false
-  }, 1000)
+  }, 3000)
 })
 </script>
 
@@ -44,7 +47,7 @@ onMounted(() => {
 }
 </style>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

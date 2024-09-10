@@ -9,7 +9,7 @@ import '@mdi/font/css/materialdesignicons.css'
 import 'vuetify/styles'
 
 import { mdi } from "vuetify/iconsets/mdi"
-import { customSets } from "@/iconsets/custom"
+import { customSets } from "@/assets/iconsets/custom"
 import * as components from "vuetify/components"
 import * as directives from "vuetify/directives"
 
@@ -24,7 +24,7 @@ const customLightTheme: ThemeDefinition = {
   colors: {
     primary: "#008000",
     secondary: "#00ccff",
-    background: "#fbfbfb",
+    background: "#eaeaea",
     surface: "#ffeedd",
     success: "#4caf50",
     error: "#b00020",

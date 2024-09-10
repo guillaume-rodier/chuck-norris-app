@@ -1,14 +1,15 @@
 <template>
   <v-parallax src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg" class="index-container" height="100vh">
     <v-container class="content-container fill-height">
-      <v-row>
+      <v-row justify="center">
         <v-col :col="12" :md="6" :lg="4">
           <ChuckNorrisSection class="ma-auto" />
         </v-col>
-        <v-col :col="12" :md="6" :lg="8">
+        <v-col :col="12" :md="6" :lg="4">
           <ChuckNorrisForm
             v-model:chuckNorrisParams="chuckNorrisParams"
-            :loading="loading"
+            :loading-chuck-joke="loadingRandomChuckJoke"
+            :loading-chuck-categories="loadingChuckCategories"
             @get-chuck-joke="doGetRandomChuckJokeAction"
           />
         </v-col>
@@ -18,48 +19,51 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, watch, onMounted } from 'vue'
-import { useDisplay } from 'vuetify'
+import { ref, onMounted } from 'vue'
 import { useStore } from 'vuex'
 import { TChuckNorrisParams } from '@/types/chuckNorris'
 
 // Data
-const { lgAndUp } = useDisplay()
 const store = useStore()
 
-const loading = ref<boolean>(false)
+const loadingRandomChuckJoke = ref<boolean>(false)
+
+const loadingChuckCategories = ref<boolean>(false)
 
 const chuckNorrisParams = ref<TChuckNorrisParams>({
   category: null,
   query: null,
 })
 
-// Computed
-const computedContainerWidth = computed<string>(() => lgAndUp.value ? '70%' : '100%')
-
-// Watchers
-watch(computedContainerWidth, () => {
-  console.log('computedContainerWidth:', computedContainerWidth.value)
-})
-
 // Life cycles
 onMounted(async() => {
-  loading.value = true
   await doGetRandomChuckJokeAction()
-  await store.dispatch('ChuckNorrisStore/getChuckCategoriesJoke')
-
-  setTimeout(() => {
-    loading.value = false
-  }, 1000)
+  await doGetChuckCategoriesJoke()
 })
 
 // Functions
 const doGetRandomChuckJokeAction = async() => {
+  loadingRandomChuckJoke.value = true
+
   await store.dispatch('ChuckNorrisStore/getRandomChuckJokeAction', chuckNorrisParams.value)
+
+  setTimeout(() => {
+    loadingRandomChuckJoke.value = false
+  }, 1000)
+}
+
+const doGetChuckCategoriesJoke = async() => {
+  loadingChuckCategories.value = true
+
+  await store.dispatch('ChuckNorrisStore/getChuckCategoriesJoke')
+
+  setTimeout(() => {
+    loadingChuckCategories.value = false
+  }, 1000)
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .index-container {
   .content-container {
     overflow: auto;
